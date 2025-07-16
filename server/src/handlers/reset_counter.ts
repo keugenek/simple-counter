@@ -1,15 +1,29 @@
 
 import { type ResetCounterInput, type Counter } from '../schema';
-import { setCurrentCount } from './get_counter';
+
+// In-memory counter storage
+let currentCount = 0;
 
 export const resetCounter = async (input: ResetCounterInput): Promise<Counter> => {
-  // This is a placeholder declaration! Real code should be implemented here.
-  // The goal of this handler is resetting the counter to the specified value (default 0).
-  // Since the counter doesn't persist across sessions, we use in-memory storage.
-  
-  setCurrentCount(input.value);
-  
-  return {
-    value: input.value
-  };
+  try {
+    // Reset the counter to the specified value (default 0)
+    currentCount = input.value;
+    
+    return {
+      value: currentCount
+    };
+  } catch (error) {
+    console.error('Counter reset failed:', error);
+    throw error;
+  }
+};
+
+// Helper function to get current count (for testing and other handlers)
+export const getCurrentCount = (): number => {
+  return currentCount;
+};
+
+// Helper function to set current count (for testing and other handlers)
+export const setCurrentCount = (value: number): void => {
+  currentCount = value;
 };

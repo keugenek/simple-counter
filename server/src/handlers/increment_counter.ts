@@ -1,17 +1,28 @@
 
 import { type IncrementCounterInput, type Counter } from '../schema';
-import { getCurrentCount, setCurrentCount } from './get_counter';
+
+// Simple in-memory counter storage
+let currentCount = 0;
+
+export const getCurrentCount = (): number => {
+  return currentCount;
+};
+
+export const setCurrentCount = (value: number): void => {
+  currentCount = value;
+};
 
 export const incrementCounter = async (input: IncrementCounterInput): Promise<Counter> => {
-  // This is a placeholder declaration! Real code should be implemented here.
-  // The goal of this handler is incrementing the counter by the specified amount.
-  // Since the counter doesn't persist across sessions, we use in-memory storage.
-  
-  const currentValue = getCurrentCount();
-  const newValue = currentValue + input.amount;
-  setCurrentCount(newValue);
-  
-  return {
-    value: newValue
-  };
+  try {
+    const currentValue = getCurrentCount();
+    const newValue = currentValue + input.amount;
+    setCurrentCount(newValue);
+    
+    return {
+      value: newValue
+    };
+  } catch (error) {
+    console.error('Counter increment failed:', error);
+    throw error;
+  }
 };

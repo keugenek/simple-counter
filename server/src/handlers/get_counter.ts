@@ -5,9 +5,6 @@ import { type Counter } from '../schema';
 let currentCount = 0;
 
 export const getCounter = async (): Promise<Counter> => {
-  // This is a placeholder declaration! Real code should be implemented here.
-  // The goal of this handler is returning the current counter value.
-  // Since the counter doesn't persist across sessions, we use in-memory storage.
   return {
     value: currentCount
   };
@@ -21,4 +18,9 @@ export const getCurrentCount = (): number => {
 // Helper function to set current count (used by other handlers)
 export const setCurrentCount = (value: number): void => {
   currentCount = value;
+};
+
+// Helper function to reset counter (used in tests)
+export const resetCounter = (): void => {
+  currentCount = 0;
 };
